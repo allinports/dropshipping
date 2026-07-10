@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mixer Elétrico Portátil — Espuma de cafeteria, em casa</title>
+  
+  <!-- Fontes Premium do Google -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Fraunces', 'serif'],
+            mono: ['"IBM Plex Mono"', 'monospace'],
+          },
+          colors: {
+            espresso: {
+              950: '#170d08',
+              900: '#241510',
+              800: '#2f1b13',
+              700: '#3d2519',
+            },
+            milk: {
+              100: '#fbf5e9',
+              50: '#fffdf8',
+            },
+            crema: {
+              500: '#b58930',
+              400: '#c89b3c',
+              300: '#dab766',
+            },
+            ink: '#1c130c',
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Alpine.js via CDN para Interatividade Leve -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <style>
+    [x-cloak] { display: none !important; }
+    html { scroll-behavior: smooth; }
+  </style>
+</head>
+<body class="bg-milk-50 font-sans text-ink antialiased selection:bg-crema-300 selection:text-espresso-950"
+      x-data="{ 
+        selectedColor: 'preto', 
+        quantity: 1, 
+        openFAQ: 0, 
+        stickyVisible: false,
+        productImages: {
+          preto: 'https://i.ibb.co/xqJsZVdR/Chat-GPT-Image-9-de-jul-de-2026-23-44-16.png',
+          branco: 'https://i.ibb.co/VYxHhzPZ/Chat-GPT-Image-9-de-jul-de-2026-23-44-42.png'
+        },
+        checkoutLinks: {
+          preto: 'https://seguro.allinports.shop/r/ARGLEF8Y98',
+          branco: 'https://seguro.allinports.shop/r/MVDKLUTCCX'
+        }
+      }"
+      @scroll.window="stickyVisible = window.scrollY > 400">
+
+  <!-- 1. BLOCO INICIAL (HERO SECTION COM NOVA ORDEM) -->
+  <header class="relative overflow-hidden bg-espresso-950 px-6 py-20 text-center sm:px-12 md:py-32">
+    <!-- Grade Decorativa de Fundo -->
+    <div class="pointer-events-none absolute inset-0 opacity-10" style="background-image: radial-gradient(circle, rgba(251,245,233,0.15) 1px, transparent 1px); background-size: 24px 24px;"></div>
+    
+    <div class="mx-auto max-w-4xl relative z-10">
+      <div class="flex flex-col items-center">
+        
+        <!-- 1° Headline -->
+        <h1 class="mb-6 font-display text-4xl font-semibold leading-[1.1] tracking-tight sm:text-5xl md:text-6xl text-milk-50 max-w-3xl">
+          Espuma de cafeteria, <span class="text-crema-300">sem sair da cozinha.</span>
+        </h1>
+        
+        <!-- 2° Sub texto -->
+        <p class="mb-10 max-w-2xl text-base md:text-lg leading-relaxed text-milk-100/80 px-4">
+          Bata leite, chocolate, shakes e vitaminas em segundos com um motor potente, recarregável via USB e do tamanho da sua mão.
+        </p>
+        
+        <!-- 3° Fotos do produto (Interativo com Alpine.js) -->
+        <div class="relative aspect-square w-full max-w-[280px] sm:max-w-[340px] md:max-w-[380px] overflow-hidden rounded-2xl bg-espresso-800/30 border border-milk-100/10 p-6 flex items-center justify-center shadow-2xl shadow-black/50 mb-8">
+          <img :src="productImages[selectedColor]" 
+               :alt="'Mixer portátil na cor ' + selectedColor"
+               class="h-full w-full object-contain rounded-xl transition-all duration-300"
+               referrerpolicy="no-referrer">
+        </div>
+
+        <!-- 4° Cores (Seletor Inteligente Sincronizado) -->
+        <div class="flex items-center justify-center gap-4 mb-10">
+          <span class="text-xs text-milk-100/40 font-medium font-mono uppercase tracking-wider">Cor:</span>
+          
+          <button @click="selectedColor = 'preto'"
+                  type="button"
+                  class="flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold tracking-wide transition-all duration-300 cursor-pointer"
+                  :class="selectedColor === 'preto' ? 'border-crema-400 bg-crema-400/10 text-milk-50' : 'border-milk-100/10 bg-milk-100/5 text-milk-100/70 hover:border-milk-100/30'">
+            <span class="h-3.5 w-3.5 rounded-full bg-[#161010] border border-milk-100/20 shadow-sm"></span>
+            Preto
+          </button>
+
+          <button @click="selectedColor = 'branco'"
+                  type="button"
+                  class="flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold tracking-wide transition-all duration-300 cursor-pointer"
+                  :class="selectedColor === 'branco' ? 'border-crema-400 bg-crema-400/10 text-milk-50' : 'border-milk-100/10 bg-milk-100/5 text-milk-100/70 hover:border-milk-100/30'">
+            <span class="h-3.5 w-3.5 rounded-full bg-[#f5f2ea] border border-espresso-950/20 shadow-sm"></span>
+            Branco
+          </button>
+        </div>
+
+        <!-- 5° Preço -->
+        <div class="flex flex-col items-center mb-8">
+          <span class="text-sm text-milk-100/50 line-through font-mono mb-1">R$ 169,90</span>
+          <span class="text-3xl sm:text-4xl font-bold tracking-tight text-milk-50 font-mono">
+            R$ 139,90 <span class="text-base font-sans font-normal text-crema-300">à vista</span>
+          </span>
+          <span class="text-xs text-milk-100/50 font-mono mt-1.5 uppercase tracking-wider">ou em até 6x sem juros no cartão</span>
+        </div>
+
+        <!-- 6° Botão de compra direcionando para o checkout direto ou âncora -->
+        <div class="w-full sm:w-auto px-4">
+          <a :href="checkoutLinks[selectedColor]"
+             target="_blank"
+             rel="noopener noreferrer"
+             class="group inline-flex w-full sm:w-auto items-center justify-center gap-3 rounded-full bg-crema-400 px-12 py-5 text-base font-extrabold text-espresso-950 transition-all duration-300 hover:scale-[1.02] hover:bg-crema-300 hover:shadow-xl hover:shadow-crema-400/30">
+            Quero o meu agora
+            <!-- Seta de ícone SVG -->
+            <svg class="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- 2. PROBLEM & AGITATION SECTION -->
+  <section class="bg-milk-100 px-6 py-20 sm:px-12 md:py-28">
+    <div class="mx-auto max-w-5xl">
+      <div class="grid grid-cols-1 gap-12 md:grid-cols-2 md:items-center">
+        <div>
+          <p class="mb-3 text-xs font-semibold tracking-widest text-crema-500 uppercase font-mono">O problema do mixer comum</p>
+          <h2 class="mb-6 font-display text-3xl font-semibold leading-tight tracking-tight text-espresso-900 sm:text-4xl">
+            Pilhas fracas e fios presos na tomada cansaram.
+          </h2>
+          <p class="mb-6 text-sm sm:text-base leading-relaxed text-[#5c4a37]">
+            Os misturadores de plástico comuns de pilha perdem a força em dias e não conseguem bater bebidas ligeiramente mais densas como whey protein ou chocolate quente. 
+          </p>
+          <p class="text-sm sm:text-base leading-relaxed text-[#5c4a37]">
+            Já os mixers profissionais de tomada são trambolhos pesados, difíceis de limpar e barulhentos demais para as primeiras horas da manhã.
+          </p>
+        </div>
+
+        <div class="rounded-2xl border border-[#ece2cd] bg-milk-50 p-8 shadow-sm">
+          <h3 class="mb-6 text-sm font-bold uppercase tracking-wider text-espresso-950 font-mono">Por que este é diferente?</h3>
+          <div class="space-y-6">
+            <div class="flex gap-4">
+              <div class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold">✓</div>
+              <div>
+                <h4 class="text-sm font-semibold text-espresso-900 mb-0.5">Potência que não morre</h4>
+                <p class="text-xs text-[#5c4a37]">A bateria recarregável de íon de lítio entrega a potência máxima do motor do início ao fim.</p>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <div class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold">✓</div>
+              <div>
+                <h4 class="text-sm font-semibold text-espresso-900 mb-0.5">Versatilidade REAL de preparo</h4>
+                <p class="text-xs text-[#5c4a37]">Acompanha 2 batedores em aço inox: espumador espiral e batedor de claras/cremes tipo fouet.</p>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <div class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold">✓</div>
+              <div>
+                <h4 class="text-sm font-semibold text-espresso-900 mb-0.5">Limpeza instantânea</h4>
+                <p class="text-xs text-[#5c4a37]">Encaixe rápido que permite tirar o batedor e lavar debaixo da torneira sem molhar o motor.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. FEATURES & SPECIFICATIONS -->
+  <section class="bg-espresso-800 px-6 py-20 text-milk-100 sm:px-12 md:py-28" id="caracteristicas">
+    <div class="mx-auto max-w-6xl">
+      <div class="mb-16 max-w-3xl">
+        <p class="mb-3 text-xs font-semibold tracking-widest text-crema-300 uppercase font-mono">O que vem na caixa e no motor</p>
+        <h2 class="mb-4 font-display text-3xl font-semibold tracking-tight sm:text-4xl text-milk-50">Um só botão. Três velocidades. Zero fio.</h2>
+        <p class="text-base text-milk-100/70">Recarrega no USB que você já tem em casa e cabe até na gaveta de talheres.</p>
+      </div>
+
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-5">
+        
+        <!-- Card 1 -->
+        <div class="group flex flex-col rounded-2xl border border-milk-100/10 bg-milk-100/[0.03] p-6 transition-all duration-300 hover:border-crema-400/30 hover:bg-milk-100/[0.06]">
+          <div class="mb-5 flex h-10 w-10 items-center justify-center rounded-xl bg-crema-400/10 text-crema-300">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+          </div>
+          <h3 class="mb-2 text-sm font-semibold tracking-tight text-milk-50">Recarregável via USB</h3>
+          <p class="text-xs leading-relaxed text-milk-100/60">Sem pilha, sem fio preso na tomada elétrica.</p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="group flex flex-col rounded-2xl border border-milk-100/10 bg-milk-100/[0.03] p-6 transition-all duration-300 hover:border-crema-400/30 hover:bg-milk-100/[0.06]">
+          <div class="mb-5 flex h-10 w-10 items-center justify-center rounded-xl bg-crema-400/10 text-crema-300">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" /></svg>
+          </div>
+          <h3 class="mb-2 text-sm font-semibold tracking-tight text-milk-50">3 velocidades</h3>
+          <p class="text-xs leading-relaxed text-milk-100/60">Do espumar mais suave ao bater bem firme.</p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="group flex flex-col rounded-2xl border border-milk-100/10 bg-milk-100/[0.03] p-6 transition-all duration-300 hover:border-crema-400/30 hover:bg-milk-100/[0.06]">
+          <div class="mb-5 flex h-10 w-10 items-center justify-center rounded-xl bg-crema-400/10 text-crema-300">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
+          </div>
+          <h3 class="mb-2 text-sm font-semibold tracking-tight text-milk-50">Cabeça removível</h3>
+          <p class="text-xs leading-relaxed text-milk-100/60">Lava em segundos, sem perigo de molhar o motor.</p>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="group flex flex-col rounded-2xl border border-milk-100/10 bg-milk-100/[0.03] p-6 transition-all duration-300 hover:border-crema-400/30 hover:bg-milk-100/[0.06]">
+          <div class="mb-5 flex h-10 w-10 items-center justify-center rounded-xl bg-crema-400/10 text-crema-300">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /><path stroke-linecap="round" stroke-linejoin="round" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" /></svg>
+          </div>
+          <h3 class="mb-2 text-sm font-semibold tracking-tight text-milk-50">Silencioso</h3>
+          <p class="text-xs leading-relaxed text-milk-100/60">Não acorda a casa inteira às 6h da manhã.</p>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="group flex flex-col rounded-2xl border border-milk-100/10 bg-milk-100/[0.03] p-6 transition-all duration-300 hover:border-crema-400/30 hover:bg-milk-100/[0.06]">
+          <div class="mb-5 flex h-10 w-10 items-center justify-center rounded-xl bg-crema-400/10 text-crema-300">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+          </div>
+          <h3 class="mb-2 text-sm font-semibold tracking-tight text-milk-50">Portátil</h3>
+          <p class="text-xs leading-relaxed text-milk-100/60">Cabe facilmente na bolsa, mochila ou gaveta.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. PRODUCT OFFER CARD (YAMPI INTEGRATION) -->
+  <section class="bg-milk-100 px-6 py-20 sm:px-12 md:py-28" id="oferta">
+    <div class="mx-auto max-w-4xl">
+      <div class="overflow-hidden rounded-3xl border border-[#ece2cd] bg-milk-50 shadow-xl grid grid-cols-1 md:grid-cols-2">
+        
+        <!-- Left Side: Product Box Details -->
+        <div class="p-8 sm:p-12 flex flex-col justify-between">
+          <div>
+            <p class="mb-3 text-xs font-semibold tracking-widest text-crema-500 uppercase font-mono">O que vem na caixa</p>
+            <h2 class="mb-4 font-display text-2xl font-semibold tracking-tight text-espresso-900 sm:text-3xl">
+              Tudo pronto pra sua primeira espuma hoje.
+            </h2>
+            <p class="mb-8 text-sm leading-relaxed text-[#5c4a37]">
+              Um kit completo, com materiais de alta qualidade e batedores de aço inoxidável fáceis de encaixar e higienizar.
+            </p>
+            
+            <ul class="space-y-4 mb-8">
+              <li class="flex items-start gap-3 text-sm text-[#4a3b2c] border-b border-dashed border-[#e6d9be]/60 pb-3">
+                <span class="text-crema-500 font-bold">✓</span>
+                <span>1 Mixer elétrico recarregável</span>
+              </li>
+              <li class="flex items-start gap-3 text-sm text-[#4a3b2c] border-b border-dashed border-[#e6d9be]/60 pb-3">
+                <span class="text-crema-500 font-bold">✓</span>
+                <span>2 Batedores intercambiáveis (fouet e espumador)</span>
+              </li>
+              <li class="flex items-start gap-3 text-sm text-[#4a3b2c] border-b border-dashed border-[#e6d9be]/60 pb-3">
+                <span class="text-crema-500 font-bold">✓</span>
+                <span>1 Cabo USB para carregamento rápido</span>
+              </li>
+              <li class="flex items-start gap-3 text-sm text-[#4a3b2c] pb-3">
+                <span class="text-crema-500 font-bold">✓</span>
+                <span>Manual de instruções detalhado</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Interactive Color Selection & Quantities -->
+          <div class="pt-4 border-t border-[#e6d9be]">
+            <div class="flex flex-wrap items-center justify-between gap-4">
+              
+              <!-- Color Selectors -->
+              <div class="flex flex-col gap-1.5">
+                <span class="text-xs text-[#5c4a37] font-semibold">Selecione a cor:</span>
+                <div class="flex gap-2">
+                  <button @click="selectedColor = 'preto'"
+                          type="button"
+                          class="h-7 px-3 text-xs font-semibold rounded-full border transition-all duration-300"
+                          :class="selectedColor === 'preto' ? 'border-espresso-900 bg-espresso-900 text-milk-100' : 'border-[#ece2cd] text-[#4a3b2c] hover:border-[#dab766]'">
+                    Preto
+                  </button>
+                  <button @click="selectedColor = 'branco'"
+                          type="button"
+                          class="h-7 px-3 text-xs font-semibold rounded-full border transition-all duration-300"
+                          :class="selectedColor === 'branco' ? 'border-espresso-900 bg-[#f5f2ea] text-espresso-900' : 'border-[#ece2cd] text-[#4a3b2c] hover:border-[#dab766]'">
+                    Branco
+                  </button>
+                </div>
+              </div>
+
+              <!-- Quantity selector -->
+              <div class="flex flex-col gap-1.5">
+                <span class="text-xs text-[#5c4a37] font-semibold">Quantidade:</span>
+                <div class="flex items-center border border-[#ece2cd] rounded-lg h-8 bg-milk-100">
+                  <button @click="quantity = Math.max(1, quantity - 1)"
+                          type="button"
+                          class="px-3 h-full hover:bg-[#ece2cd] text-espresso-900 transition-colors rounded-l-lg font-bold">-</button>
+                  <span class="px-3 text-xs font-mono font-bold text-espresso-900" x-text="quantity"></span>
+                  <button @click="quantity = quantity + 1"
+                          type="button"
+                          class="px-3 h-full hover:bg-[#ece2cd] text-espresso-900 transition-colors rounded-r-lg font-bold">+</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side: Commercial Pricing & Direct Button to Yampi -->
+        <div class="bg-espresso-900 text-milk-100 p-8 sm:p-12 flex flex-col justify-center relative">
+          <span class="absolute top-6 right-6 border border-crema-400 text-crema-300 font-mono text-[10px] uppercase tracking-widest px-3 py-1 rounded-full">
+            -17% HOJE
+          </span>
+          
+          <div class="mb-1 text-sm text-milk-100/50 line-through font-mono">
+            R$ <span x-text="(169.90 * quantity).toFixed(2).replace('.', ',')"></span>
+          </div>
+          
+          <div class="mb-2 font-display text-4xl sm:text-5xl font-bold tracking-tight text-milk-50">
+            R$ <span x-text="(139.90 * quantity).toFixed(2).replace('.', ',')"></span> <span class="text-sm font-sans font-normal text-crema-300">à vista</span>
+          </div>
+          
+          <p class="mb-8 text-xs font-mono text-milk-100/60">
+            ou em até 6x sem juros de R$ <span x-text="((139.90 * quantity) / 6).toFixed(2).replace('.', ',')"></span> no cartão
+          </p>
+
+          <!-- Botão de Compra Inteligente Direto Para Yampi (com quebra opcional no mobile) -->
+          <a :href="checkoutLinks[selectedColor]"
+             target="_blank"
+             rel="noopener noreferrer"
+             class="group w-full flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 rounded-full bg-crema-400 px-4 py-3.5 sm:py-4.5 text-center text-sm sm:text-base font-extrabold text-espresso-950 transition-all duration-300 hover:scale-[1.02] hover:bg-crema-300 hover:shadow-xl hover:shadow-crema-400/20 leading-tight">
+            <span>Garantir Meu Mixer</span>
+            <span>+ Frete Grátis</span>
+          </a>
+
+          <!-- Fatores de Confiança -->
+          <div class="mt-8 grid grid-cols-3 gap-2 border-t border-milk-100/15 pt-6 text-center">
+            <div class="flex flex-col items-center gap-1">
+              <svg class="h-4 w-4 text-crema-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+              <span class="text-[10px] text-milk-100/60 font-medium">Compra segura</span>
+            </div>
+            <div class="flex flex-col items-center gap-1">
+              <svg class="h-4 w-4 text-crema-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" /></svg>
+              <span class="text-[10px] text-milk-100/60 font-medium">Envio rastreado</span>
+            </div>
+            <div class="flex flex-col items-center gap-1">
+              <svg class="h-4 w-4 text-crema-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12" /></svg>
+              <span class="text-[10px] text-milk-100/60 font-medium">Troca garantida</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. FAQ SECTIONS (ACCORDION INTERATIVO) -->
+  <section class="bg-milk-50 px-6 py-20 sm:px-12 md:py-28" id="faq">
+    <div class="mx-auto max-w-3xl">
+      <div class="mb-12 text-center">
+        <p class="mb-3 text-xs font-semibold tracking-widest text-crema-500 uppercase font-mono">Perguntas Frequentes</p>
+        <h2 class="font-display text-3xl font-semibold tracking-tight text-espresso-900 sm:text-4xl">Antes de você clicar em comprar</h2>
+      </div>
+
+      <div class="space-y-4">
+        
+        <!-- FAQ Item 1 -->
+        <div class="border-b border-[#e6d9be] pb-4">
+          <button @click="openFAQ = openFAQ === 1 ? null : 1"
+                  type="button"
+                  class="flex w-full items-center justify-between py-4 text-left font-semibold text-espresso-900 hover:text-crema-500 transition-colors">
+            <span class="text-base sm:text-lg tracking-tight">Quanto tempo dura a bateria carregada?</span>
+            <span class="ml-4 flex h-6 w-6 items-center justify-center rounded-full bg-[#ece2cd]/50 text-espresso-900 shrink-0">
+              <span x-show="openFAQ !== 1" class="text-sm font-bold">+</span>
+              <span x-show="openFAQ === 1" class="text-sm font-bold" x-cloak>−</span>
+            </span>
+          </button>
+          <div x-show="openFAQ === 1" x-collapse x-cloak class="pb-4 pr-6 text-sm sm:text-[15px] leading-relaxed text-[#5c4a37]">
+            Uma carga completa via USB rende semanas de uso diário regular para café e shakes — o consumo de energia é extremamente baixo por ser um motor compacto e altamente otimizado de alto torque.
+          </div>
+        </div>
+
+        <!-- FAQ Item 2 -->
+        <div class="border-b border-[#e6d9be] pb-4">
+          <button @click="openFAQ = openFAQ === 2 ? null : 2"
+                  type="button"
+                  class="flex w-full items-center justify-between py-4 text-left font-semibold text-espresso-900 hover:text-crema-500 transition-colors">
+            <span class="text-base sm:text-lg tracking-tight">Serve para outras bebidas além de café?</span>
+            <span class="ml-4 flex h-6 w-6 items-center justify-center rounded-full bg-[#ece2cd]/50 text-espresso-900 shrink-0">
+              <span x-show="openFAQ !== 2" class="text-sm font-bold">+</span>
+              <span x-show="openFAQ === 2" class="text-sm font-bold" x-cloak>−</span>
+            </span>
+          </button>
+          <div x-show="openFAQ === 2" x-collapse x-cloak class="pb-4 pr-6 text-sm sm:text-[15px] leading-relaxed text-[#5c4a37]">
+            Com certeza! O batedor espumador funciona perfeitamente para leite, capuccino, chocolate quente e shakes. O batedor do tipo fouet é ótimo para misturar wheys, vitaminas, molhos ou até bater claras em neve e pequenas receitas de confeitaria rápida.
+          </div>
+        </div>
+
+        <!-- FAQ Item 3 -->
+        <div class="border-b border-[#e6d9be] pb-4">
+          <button @click="openFAQ = openFAQ === 3 ? null : 3"
+                  type="button"
+                  class="flex w-full items-center justify-between py-4 text-left font-semibold text-espresso-900 hover:text-crema-500 transition-colors">
+            <span class="text-base sm:text-lg tracking-tight">Como faço para trocar em caso de defeito?</span>
+            <span class="ml-4 flex h-6 w-6 items-center justify-center rounded-full bg-[#ece2cd]/50 text-espresso-900 shrink-0">
+              <span x-show="openFAQ !== 3" class="text-sm font-bold">+</span>
+              <span x-show="openFAQ === 3" class="text-sm font-bold" x-cloak>−</span>
+            </span>
+          </button>
+          <div x-show="openFAQ === 3" x-collapse x-cloak class="pb-4 pr-6 text-sm sm:text-[15px] leading-relaxed text-[#5c4a37]">
+            Nosso produto conta com garantia incondicional contra defeitos de fabricação. Basta entrar em contato com o suporte através de nossos canais de atendimento com o número da compra e providenciaremos a substituição imediata ou reembolso.
+          </div>
+        </div>
+
+        <!-- FAQ Item 4 -->
+        <div class="border-b border-[#e6d9be] pb-4">
+          <button @click="openFAQ = openFAQ === 4 ? null : 4"
+                  type="button"
+                  class="flex w-full items-center justify-between py-4 text-left font-semibold text-espresso-900 hover:text-crema-500 transition-colors">
+            <span class="text-base sm:text-lg tracking-tight">Qual o prazo de entrega?</span>
+            <span class="ml-4 flex h-6 w-6 items-center justify-center rounded-full bg-[#ece2cd]/50 text-espresso-900 shrink-0">
+              <span x-show="openFAQ !== 4" class="text-sm font-bold">+</span>
+              <span x-show="openFAQ === 4" class="text-sm font-bold" x-cloak>−</span>
+            </span>
+          </button>
+          <div x-show="openFAQ === 4" x-collapse x-cloak class="pb-4 pr-6 text-sm sm:text-[15px] leading-relaxed text-[#5c4a37]">
+            O prazo exato de entrega varia de acordo com sua região e o CEP de destino, sendo calculado automaticamente na etapa de envio do checkout da Yampi antes da confirmação do pagamento.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. HIGH-CONTRAST FOOTER CTA -->
+  <section class="bg-espresso-950 text-milk-100 text-center py-20 px-6 sm:px-12 relative overflow-hidden" id="final-cta">
+    <div class="pointer-events-none absolute inset-0 opacity-15" style="background-image: radial-gradient(circle, rgba(251,245,233,0.08) 1px, transparent 1px); background-size: 20px 20px;"></div>
+    
+    <div class="mx-auto max-w-xl relative z-10">
+      <h2 class="font-display text-3xl font-semibold leading-tight tracking-tight sm:text-4xl mb-4 text-milk-50">Sua próxima xícara já pode vir com espuma de barista.</h2>
+      <p class="text-milk-100/60 mb-8 max-w-sm mx-auto text-sm sm:text-base">R$ 139,90 à vista, com frete expresso incluso e desconto de lançamento por tempo limitado.</p>
+      
+      <div>
+        <a :href="checkoutLinks[selectedColor]"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="group inline-flex items-center justify-center gap-3 rounded-full bg-crema-400 px-8 py-4 text-sm sm:text-base font-bold text-espresso-950 transition-all duration-300 hover:scale-[1.02] hover:bg-crema-300 hover:shadow-lg hover:shadow-crema-400/30">
+          Quero o meu com desconto
+          <svg class="h-4.5 w-4.5 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. FOOTER -->
+  <footer class="bg-[#170d08] text-milk-100/40 text-center py-6 px-6 text-xs border-t border-milk-100/5">
+    <div class="mx-auto max-w-4xl space-y-2">
+      <p class="font-medium tracking-wide">
+        Compra 100% segura • Seus dados estão protegidos por criptografia • Atendimento dedicado ao cliente
+      </p>
+      <p class="text-[11px] opacity-70">
+        © 2026 Mixer Elétrico Portátil. Todos os direitos reservados. Imagens meramente ilustrativas.
+      </p>
+    </div>
+  </footer>
+
+  <!-- 8. STICKY MOBILE FLOATING BAR -->
+  <div x-show="stickyVisible"
+       x-transition:enter="transition ease-out duration-300"
+       x-transition:enter-start="transform translate-y-full opacity-0"
+       x-transition:enter-end="transform translate-y-0 opacity-100"
+       x-transition:leave="transition ease-in duration-200"
+       x-transition:leave-start="transform translate-y-0 opacity-100"
+       x-transition:leave-end="transform translate-y-full opacity-0"
+       class="fixed bottom-0 left-0 right-0 z-40 bg-espresso-950 border-t border-milk-100/10 px-6 py-4 flex items-center justify-between gap-4 md:hidden pb-safe shadow-[0_-8px_24px_rgba(0,0,0,0.3)]"
+       x-cloak>
+    <div class="flex flex-col">
+      <span class="text-[10px] text-milk-100/50 line-through font-mono">R$ 169,90</span>
+      <span class="text-sm font-bold tracking-tight text-milk-100 font-mono">
+        R$ 139,90 <span class="text-[10px] text-crema-300 font-sans font-normal">à vista</span>
+      </span>
+    </div>
+
+    <a :href="checkoutLinks[selectedColor]"
+       target="_blank"
+       rel="noopener noreferrer"
+       class="rounded-full bg-crema-400 px-6 py-2.5 text-xs font-bold text-espresso-950 shadow-md transition-all hover:bg-crema-300">
+      Comprar agora
+    </a>
+  </div>
+
+</body>
+</html>
