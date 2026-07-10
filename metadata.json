@@ -1,6 +1,0 @@
-{
-  "name": "Mixer Elétrico Portátil",
-  "description": "Landing page de alta conversão para o Mixer Elétrico Portátil recarregável, ideal para preparar espumas cremosas de café em casa.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
